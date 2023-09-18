@@ -16,6 +16,7 @@ section .bss
     num1 resq 1
     num2 resq 1
     resultado resq 1
+    zero db '0', 0
 
 section .text
 global _start
@@ -34,6 +35,7 @@ menu_loop:
     mov ecx, menu_adicao
     mov edx, 13
     int 80h
+
     ; Repita para as outras opções do menu...
 
     ; Solicitar a escolha do usuário
@@ -49,19 +51,16 @@ menu_loop:
     mov edx, 1
     int 80h
 
-    ; Converter a escolha para um número
-    sub byte [opcao], '0'
-
     ; Executar a operação selecionada
-    cmp byte [opcao], 1
+    cmp byte [opcao], '1'
     je adicao
-    cmp byte [opcao], 2
+    cmp byte [opcao], '2'
     je subtracao
-    cmp byte [opcao], 3
+    cmp byte [opcao], '3'
     je multiplicacao
-    cmp byte [opcao], 4
+    cmp byte [opcao], '4'
     je divisao
-    cmp byte [opcao], 0
+    cmp byte [opcao], '0'
     je sair
 
     ; Tratar escolha inválida
@@ -80,6 +79,7 @@ adicao:
 
     ; Solicitar o segundo número ao usuário
     mov eax, 4
+    mov ebx, 1
     mov ecx, num2_msg
     mov edx, 22
     int 80h
@@ -95,13 +95,38 @@ adicao:
 
     jmp menu_loop
 
-; Implementar as outras operações (subtracao, multiplicacao, divisao) de maneira semelhante
+subtracao:
+    ; Solicitar números ao usuário
+    ; Ler os números
+    ; Realizar a subtração
+    ; Exibir o resultado
+    ; Implementar a subtração aqui...
+
+    jmp menu_loop
+
+multiplicacao:
+    ; Solicitar números ao usuário
+    ; Ler os números
+    ; Realizar a multiplicação
+    ; Exibir o resultado
+    ; Implementar a multiplicação aqui...
+
+    jmp menu_loop
 
 divisao:
+    ; Solicitar números ao usuário
+    ; Ler os números
     ; Verificar se o divisor é zero
     ; Se for zero, exibir mensagem de erro e voltar ao menu
+    ; Realizar a divisão
+    ; Exibir o resultado
     ; Implementar a divisão aqui...
+
+    jmp menu_loop
 
 sair:
     ; Finalizar o programa
-    ; Implementar a saída aqui...
+    mov eax, 1
+    mov ebx, 0
+    int 80h
+    
